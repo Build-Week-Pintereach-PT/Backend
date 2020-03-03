@@ -9,7 +9,7 @@ exports.up = function(knex, Promise) {
             .references('article_id')
             .inTable('articles')
   })
-};
+}
 
 exports.down = function(knex, Promise) {
     return knex.schema.dropTableIfExists('board-articles')
