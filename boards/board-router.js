@@ -1,20 +1,22 @@
+const router = require('express').Router()
+const db = require('../boards/board-model')
+
 /************************/
 /******** CREATE ********/
 /************************/
 
-router.post('/:id/actions', validateProjectId, validateAction, (req, res) => {
+router.post('/', (req, res) => {
 
-    const actionData = { ...req.body, project_id: req.params.id }
-
-    Actions.insert(actionData)
+    db.addBoard(req.body)
   
-        .then(action => {
+        .then(id => {
             res.status(201)
-            .json(action)})
+            .json(id)})
     
         .catch(error => {
+            console.log(error)
             res.status(500)
-            .json({ error: 'We ran into an error creating the action' })
+            .json({ error: 'We ran into an error creating the board' })
         })
   })
 
@@ -25,20 +27,21 @@ router.post('/:id/actions', validateProjectId, validateAction, (req, res) => {
 /**********************/
 
 router.get('/', (req, res) => {
-    Actions.get()
+    db.find()
   
         .then(actions => {
             res.status(200)
             .json(actions)})
     
         .catch(error => {
+            console.log(error)
             res.status(500)
             .json({ error: 'We ran into an error retrieving the actions' })
         })
 })
 
-router.get('/:id', (req, res) => {
-    Actions.get(req.params.id)
+router.get('/user/:id', (req, res) => {
+    db.findBoardByUser(req.params.id)
   
         .then(actions => {
             res.status(200)
@@ -46,7 +49,7 @@ router.get('/:id', (req, res) => {
     
         .catch(error => {
             res.status(500)
-            .json({ error: 'We ran into an error retrieving the actions' })
+            .json({ error: 'We ran into an error retrieving the boards' })
         })
 })
 
@@ -56,16 +59,17 @@ router.get('/:id', (req, res) => {
 /******** UPDATE ********/
 /************************/
 
-router.put('/:id', validateActionId, validateAction, (req, res) => {
-    Actions.update(req.params.id, req.body)
+router.put('/:id', (req, res) => {
+    db.update(req.params.id, req.body)
   
         .then(() => {
             res.status(200)
-            .json({ message: 'Action updated successfully' })})
+            .json({ message: 'Board updated successfully' })})
     
         .catch(error => {
+            console.log(error)
             res.status(500)
-            .json({ error: 'We ran into an error removing the action' })
+            .json({ error: 'We ran into an error updating the board' })
         })
 })
 
@@ -75,16 +79,16 @@ router.put('/:id', validateActionId, validateAction, (req, res) => {
 /******** DELETE ********/
 /************************/
 
-router.delete('/:id', validateActionId, (req, res) => {
-    Actions.remove(req.params.id)
+router.delete('/:id', (req, res) => {
+    db.remove(req.params.id)
   
         .then(() => {
             res.status(200)
-            .json({ message: 'Action deleted successfully' })})
+            .json({ message: 'Board deleted successfully' })})
     
         .catch(error => {
             res.status(500)
-            .json({ error: 'We ran into an error removing the action' })
+            .json({ error: 'We ran into an error removing the board' })
         })
 })
   

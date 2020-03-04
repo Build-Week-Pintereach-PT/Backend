@@ -2,27 +2,35 @@ const db = require('../database/dbConfig')
 
 module.exports = {
     addArticle,
-    findBy,
-    findById,
+    find,
+    findArticleByBoard,
     update,
+    remove
 }
 
-async function addArticle(user) {
-    const [id] = await db('articles').insert(user)
-    return findById(id)
+function addArticle(article) {
+    return db('articles')
+        .insert(article, 'id')
+        .then(([id]) => id)
 }
 
-function findBy(filter) {
-    return db('articles').where(filter)
+function find() {
+    return db('articles')
 }
 
-function findById(id) {
-    return db('articles').where({ id }).first()
+function findArticleByBoard(board_id) {
+    return db('articles')
+        .where({board_id})
 }
 
 function update(id, changes) {
-    return db('users')
+    return db('articles')
         .where({id})
         .update(changes)
-        .then(count => (count > 0 ? this.get(id) : null))
+}
+
+function remove(id) {
+    return db("articles")
+        .where({id})
+        .del();
 }

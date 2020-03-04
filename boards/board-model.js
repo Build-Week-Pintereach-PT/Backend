@@ -2,33 +2,35 @@ const db = require('../database/dbConfig')
 
 module.exports = {
     addBoard,
-    findBy,
-    findById,
-    update
+    find,
+    findBoardByUser,
+    update,
+    remove
 }
 
-async function addBoard(user) {
-    const [id] = await db('boards').insert(user)
-    return findById(id)
+function addBoard(board) {
+    return db('boards')
+        .insert(board, 'id')
+        .then(([id]) => id)
 }
 
-function findBy(filter) {
-    return db('boards').where(filter)
+function find() {
+    return db('boards')
 }
 
-function findById(id) {
-    return db('boards').where({ id }).first()
+function findBoardByUser(user_id) {
+    return db('boards')
+        .where({user_id})
 }
 
 function update(id, changes) {
-    return db('users')
+    return db('boards')
         .where({id})
         .update(changes)
-        .then(count => (count > 0 ? this.get(id) : null))
 }
 
 function remove(id) {
-    return db("projects")
+    return db("boards")
         .where({id})
         .del();
 }
