@@ -6,6 +6,7 @@ const cors = require('cors');
 const server = express();
 
 // imports
+const userRouter = require('../users/user-router')
 
 // global middlewares
 server.use(helmet());
@@ -13,6 +14,8 @@ server.use(express.json());
 server.use(cors());
 
 // routes
+server.use('/api/user', userRouter)
+
 
 // sanity check
 server.get('/', (req, res) => {

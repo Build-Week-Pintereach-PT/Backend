@@ -4,14 +4,18 @@ const jwt = require('jsonwebtoken')
 
 const { jwtSecret } = require('../config/secret')
 
-const Users = require('../users/user-model')
+const db = require('../users/user-model')
+
+
+
+/************************/
+/******** CREATE ********/
+/************************/
 
 router.post('/register', (req, res) => {
   let user = req.body
-  const hash = bcrypt.hashSync(user.password,10)
-  user.password = hash
 
-  Users.add(user)
+  db.addUser({...user, password: bcrypt.hashSync(user.password,8)})
   .then(newUser => {
     res.status(201)
     .json(newUser)
@@ -25,8 +29,7 @@ router.post('/register', (req, res) => {
 router.post('/login', (req, res) => {
   let { username, password } = req.body
 
-  Users.findBy({username})
-    .first()
+  db.findBy(username)
     .then(user => {
 
       if(user && bcrypt.compareSync(password, user.password)) {
@@ -44,6 +47,42 @@ router.post('/login', (req, res) => {
       .json(err)
     })
 })
+
+
+
+/**********************/
+/******** READ ********/
+/**********************/
+
+router.get('/', (req, res) => {
+  db.find()
+      .then(users => {
+          res.status(200)
+          .json(users)
+      })
+      .catch(err => {
+          console.log(err)
+          res.status(500)
+          .json({message: 'Unable to get users'})
+      })
+})
+
+router.get('/:id', (req, res) => {
+  db.findById(req.params.id)
+
+      .then(actions => {
+          res.status(200)
+          .json(actions)})
+  
+      .catch(error => {
+          console.log(error)
+          res.status(500)
+          .json({ error: 'We ran into an error retrieving the actions' })
+      })
+})
+
+
+
 
 function signToken(user) {
   const payload = { user }

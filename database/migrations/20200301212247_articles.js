@@ -1,10 +1,13 @@
 exports.up = function(knex) {
     return knex.schema.createTable('articles', tbl => {
-        tbl.increments('articles_id')
-        tbl.integer('board_id', 128)
-            .references('board_id')
+        tbl.increments()
+        tbl.integer('board_id')
+            .references('id')
             .inTable('boards')
             .notNullable()
+            .unsigned()
+            .onUpdate('CASCADE')
+            .onDelete('CASCADE')
         tbl.string('link', 255)
             .notNullable()
         tbl.string('description', 255)
