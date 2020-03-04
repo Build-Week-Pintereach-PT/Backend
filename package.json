@@ -1,5 +1,5 @@
 {
-	"name": "kiss-server",
+	"name": "backend",
 	"version": "1.0.0",
 	"description": "A simple starter backend using Express, Knex, Sqlite3, and Postgres",
 	"main": "index.js",
@@ -11,15 +11,15 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/jess-daniel/kiss-server.git"
+		"url": "git+https://github.com/Build-Week-Pintereach-PT/Backend"
 	},
 	"keywords": [],
-	"author": "Jess Daniel",
+	"author": "Tim Jeffries",
 	"license": "MIT",
 	"bugs": {
-		"url": "https://github.com/jess-daniel/kiss-server/issues"
+		"url": "https://github.com/Build-Week-Pintereach-PT/Backend/issues"
 	},
-	"homepage": "https://github.com/jess-daniel/kiss-server#readme",
+	"homepage": "https://github.com/Build-Week-Pintereach-PT/Backend#readme",
 	"dependencies": {
 		"bcryptjs": "^2.4.3",
 		"chalk": "^3.0.0",
