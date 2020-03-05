@@ -69,7 +69,7 @@ router.put('/:id', (req, res) => {
         .catch(error => {
             console.log(error)
             res.status(500)
-            .json({ error: 'We ran into an error updating the board' })
+            .json(error.message)
         })
 })
 
