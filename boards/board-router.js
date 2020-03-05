@@ -36,7 +36,7 @@ router.get('/', (req, res) => {
         .catch(error => {
             console.log(error)
             res.status(500)
-            .json({ error: 'We ran into an error retrieving the actions' })
+            .json({ error: 'We ran into an error retrieving the boards' })
         })
 })
 
@@ -49,7 +49,7 @@ router.get('/user/:id', (req, res) => {
     
         .catch(error => {
             res.status(500)
-            .json({ error: 'We ran into an error retrieving the boards' })
+            .json({ error: 'We ran into an error retrieving the board' })
         })
 })
 
