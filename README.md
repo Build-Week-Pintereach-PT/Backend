@@ -2,11 +2,11 @@
 
 ---
 
-Deployed Backend: [https://build-week-how-to.herokuapp.com/](https://build-week-how-to.herokuapp.com/)
+Deployed Backend: [https://build-week-pintereach-pt.herokuapp.com/](https://build-week-pintereach-pt.herokuapp.com/)
 
-_How-Tos_ is a full-stack web application that was built during a "build week" by [Lambda School](https://lambdaschool.com/) students. Each student fulfills a role in the project to collectively build the application.
+_Pintereach_ is a full-stack web application that was built during a "build week" by [Lambda School](https://lambdaschool.com/) students. Each student fulfills a role in the project to collectively build the application.
 
-_How-Tos_ gives users a site where they can add and edit their own how-tos and everyone else who is signed up can see.
+_Pintereach_ gives users a site where they can organize research articles.
 
 ## Using
 
@@ -15,9 +15,7 @@ _How-Tos_ gives users a site where they can add and edit their own how-tos and e
 - [Node.js](https://en.wikipedia.org/wiki/Node.js) - JavaScript runtime for executing JavaScript at the server outside the browser
 - [Express.js](https://expressjs.com/) - Lightweight web framework to bootstrap Node.js APIs
 - [SQLite](https://www.sqlite.org/index.html) - Super lightweight database to bootstrap development environments
-- [PostgreSQL](https://www.postgresql.org/) - An advanced object-relational database for production environments
 - [Knex.js](https://knexjs.org/) - A SQL query builder that helps abstracting migrations and DDLs for different database types into a single coherent structure
-- [Knex-Cleaner](https://www.npmjs.com/package/knex-cleaner) - Helper library to clean a PostgreSQL, MySQL or SQLite3 database tables using Knex
 - [Bcrypt.js](https://www.npmjs.com/package/bcryptjs) - A module to help make passwords more secure
 - [CORS](https://www.npmjs.com/package/cors) - A Node.js package for providing a Connect/Express middleware that can be used to enable CORS with various options
 - [Helmet](https://www.npmjs.com/package/helmet) - A collection of 14 smaller middleware functions that set HTTP response headers
@@ -28,18 +26,18 @@ _How-Tos_ gives users a site where they can add and edit their own how-tos and e
 
 ## BASEURL
 
-- https://build-week-how-to.herokuapp.com/ \*
+- https://build-week-pintereach-pt.herokuapp.com/ \*
 
 ## ENDPOINTS
 
-| Endpoint           | Request Type | Request                                                | Response                                        |
-| ------------------ | ------------ | ------------------------------------------------------ | ----------------------------------------------- |
-| /api/auth/register | POST         | {username: "", password: "", email: "", usertype: int} | {welcome: username, password: encrypted string} |
-| /api/auth/login    | POST         | {username: "", password: ""}                           | {userobject, token}                             |
+| Endpoint           | Request Type | Request                                                                                                  | Response                                        |
+| ------------------ | ------------ | -------------------------------------------------------------------------------------------------------- | ----------------------------------------------- |
+| /api/user/register | POST         | {username: "", password: "", email: "", name: "", field_of_study: "", occupation: ""}                    | {welcome: username, password: encrypted string} |
+| /api/user/login    | POST         | {username: "", password: ""}                                                                             | {userobject, token}                             |
 
 ### Examples:
 
-    /api/auth/register
+    /api/user/register
     POST
 
 - JWT protected (header) :x:
@@ -47,14 +45,14 @@ _How-Tos_ gives users a site where they can add and edit their own how-tos and e
 
   ```javascript
   {
-    username: "dannybb";
+    username: "IndiWhip";
     password: "nestor12!";
     email: "an@email.com";
     usertype: "Content Creator";
   }
   ```
 
-  /api/auth/login
+  /api/user/login
   POST
 
 - JWT protected (header) :x:
