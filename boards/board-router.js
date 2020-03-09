@@ -1,11 +1,12 @@
 const router = require('express').Router()
 const db = require('../boards/board-model')
+const middleAuth = require('../auth/authenticate-middleware')
 
 /************************/
 /******** CREATE ********/
 /************************/
 
-router.post('/', (req, res) => {
+router.post('/', middleAuth, (req, res) => {
 
     db.addBoard(req.body)
   
@@ -40,7 +41,7 @@ router.get('/', (req, res) => {
         })
 })
 
-router.get('/user/:id', (req, res) => {
+router.get('/user/:id', middleAuth, (req, res) => {
     db.findBoardByUser(req.params.id)
   
         .then(actions => {
@@ -59,7 +60,7 @@ router.get('/user/:id', (req, res) => {
 /******** UPDATE ********/
 /************************/
 
-router.put('/:id', (req, res) => {
+router.put('/:id', middleAuth, (req, res) => {
     db.update(req.params.id, req.body)
   
         .then(() => {
@@ -79,7 +80,7 @@ router.put('/:id', (req, res) => {
 /******** DELETE ********/
 /************************/
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', middleAuth, (req, res) => {
     db.remove(req.params.id)
   
         .then(() => {
