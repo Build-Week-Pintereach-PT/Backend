@@ -41,7 +41,7 @@ router.get('/', (req, res) => {
         })
 })
 
-router.get('/user/:id', middleAuth, (req, res) => {
+router.get('/user/:id', (req, res) => {
     db.findBoardByUser(req.params.id)
   
         .then(actions => {
