@@ -7,7 +7,7 @@
 		"start": "node index.js",
 		"dev": "nodemon index.js",
 		"lint": "eslint index.js api",
-		"test": "cross-env DB_ENV=testing jest --watch"
+		"test": "cross-env DB_ENV=testing jest --watch --verbose --runInBand"
 	},
 	"repository": {
 		"type": "git",
@@ -34,7 +34,7 @@
 		"sqlite3": "^4.1.1"
 	},
 	"devDependencies": {
-		"cross-env": "^7.0.0",
+		"cross-env": "^7.0.2",
 		"eslint": "^6.8.0",
 		"eslint-config-airbnb-base": "^14.0.0",
 		"eslint-plugin-import": "^2.20.1",

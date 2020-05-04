@@ -2,11 +2,11 @@
 
 ---
 
-Deployed Backend: [https://build-week-how-to.herokuapp.com/](https://build-week-how-to.herokuapp.com/)
+Deployed Backend: [https://build-week-pintereach-pt.herokuapp.com/](https://build-week-pintereach-pt.herokuapp.com/)
 
-_How-Tos_ is a full-stack web application that was built during a "build week" by [Lambda School](https://lambdaschool.com/) students. Each student fulfills a role in the project to collectively build the application.
+_Pintereach_ is a full-stack web application that was built during a "build week" by [Lambda School](https://lambdaschool.com/) students. Each student fulfills a role in the project to collectively build the application.
 
-_How-Tos_ gives users a site where they can add and edit their own how-tos and everyone else who is signed up can see.
+_Pintereach_ gives users a site where they can organize research articles.
 
 ## Using
 
@@ -15,9 +15,7 @@ _How-Tos_ gives users a site where they can add and edit their own how-tos and e
 - [Node.js](https://en.wikipedia.org/wiki/Node.js) - JavaScript runtime for executing JavaScript at the server outside the browser
 - [Express.js](https://expressjs.com/) - Lightweight web framework to bootstrap Node.js APIs
 - [SQLite](https://www.sqlite.org/index.html) - Super lightweight database to bootstrap development environments
-- [PostgreSQL](https://www.postgresql.org/) - An advanced object-relational database for production environments
 - [Knex.js](https://knexjs.org/) - A SQL query builder that helps abstracting migrations and DDLs for different database types into a single coherent structure
-- [Knex-Cleaner](https://www.npmjs.com/package/knex-cleaner) - Helper library to clean a PostgreSQL, MySQL or SQLite3 database tables using Knex
 - [Bcrypt.js](https://www.npmjs.com/package/bcryptjs) - A module to help make passwords more secure
 - [CORS](https://www.npmjs.com/package/cors) - A Node.js package for providing a Connect/Express middleware that can be used to enable CORS with various options
 - [Helmet](https://www.npmjs.com/package/helmet) - A collection of 14 smaller middleware functions that set HTTP response headers
@@ -26,20 +24,21 @@ _How-Tos_ gives users a site where they can add and edit their own how-tos and e
 - [Jest](https://jestjs.io/) - A simple JavaScript testing framework
 - [Dotenv](https://www.npmjs.com/package/dotenv) - a zero-dependency module that loads environment variables from a .env file into process.env
 
-## BASEURL
+## USER ENDPOINTS
+#### Base URL: https://build-week-pintereach-pt.herokuapp.com/
 
-- https://build-week-how-to.herokuapp.com/ \*
-
-## ENDPOINTS
-
-| Endpoint           | Request Type | Request                                                | Response                                        |
-| ------------------ | ------------ | ------------------------------------------------------ | ----------------------------------------------- |
-| /api/auth/register | POST         | {username: "", password: "", email: "", usertype: int} | {welcome: username, password: encrypted string} |
-| /api/auth/login    | POST         | {username: "", password: ""}                           | {userobject, token}                             |
+| Endpoint | Request Type | JSON Web Token | Request | Response |
+| - | - | - | - | - |
+| /api/user/register | POST | :x: | {username: "" , password: "" , email: "" , name: "" , field_of_study: "" , occupation: ""} | {welcome: username , password: encrypted string} |
+| /api/user/login | POST | :x: | {username: "", password: ""} | {userobject , token} |
+| /api/user/ | GET | :x: | | [{users}] |
+| /api/user/:id | GET | :x: | {id: int} | {username: string , name: string , field_of_study: string , occupation: string} |
 
 ### Examples:
-
-    /api/auth/register
+ ---
+##### Create new user
+#
+    /api/user/register
     POST
 
 - JWT protected (header) :x:
@@ -47,266 +46,218 @@ _How-Tos_ gives users a site where they can add and edit their own how-tos and e
 
   ```javascript
   {
-    username: "dannybb";
-    password: "nestor12!";
-    email: "an@email.com";
-    usertype: "Content Creator";
+    username: "IndiWhip",
+    password: "password1",
+    email: "dr.jones@marshall.edu",
+    name: "Indiana Jones",
+    field_of_study: "archaeology",
+    occupation: "professor"
   }
   ```
-
-  /api/auth/login
-  POST
+ ---
+##### Login user
+#
+    /api/user/login
+    POST
 
 - JWT protected (header) :x:
 - payload (body) :heavy_check_mark:
 
   ```javascript
   {
-    username: "dannybb";
-    password: "nestor12!";
+    username: "IndiWhip",
+    password: "password1"
   }
   ```
+ ---
+##### Get all users
+#
+    /api/user/
+    GET
 
-## ENDPOINTS
+- JWT protected (header) :x:
+- payload (body) :x:
 
-| Endpoint        | Request Type | Request                            | Response                           |
-| --------------- | ------------ | ---------------------------------- | ---------------------------------- |
-| /api/howtos     | GET          | requires a token                   | [{howtos}]                         |
-| /api/howtos/:id | GET          | requires a token                   | {instruction: string, number: int} |
-| /api/howtos     | POST         | {name: "", desc: "", user_id: int} | no return at the moment            |
-| /api/howtos/:id | PUT          | {name: "", desc: "", user_id: int} | no return at the moment            |
-| /api/howtos/:id | DELETE       | {}                                 | no return at the moment            |
+ ---
+##### Get user by ID
+#
+    /api/user/:id
+    GET
+
+- JWT protected (header) :x:
+- payload (body) :heavy_check_mark:
+
+  ```javascript
+  {
+    id: 1
+  }
+  ```
+ ---
+
+## BOARD ENDPOINTS
+#### Base URL: https://build-week-pintereach-pt.herokuapp.com/
+
+| Endpoint | Request Type | JSON Web Token | Request | Response |
+| - | - | - | - | - |
+| /api/boards/ | POST | :heavy_check_mark: | {user_id: int , name: ""} | {id} |
+| /api/boards/ | GET | :x: | | [{boards}] |
+| /api/boards/user/:id | GET | :x: | {user_id: int} | {user_id: int , [{boards}] |
+| /api/boards/:id | PUT | :heavy_check_mark: | {id: int , user_id: int , name: ""} | {user_id: int , name: ""} |
+| /api/boards/:id | DELETE | :heavy_check_mark: | {id: int} | Success |
 
 ### Examples:
-
-/api/howtos
-GET
-
-- JWT protected (header) :heavy_check_mark:
-- payload (body) :x:
-
-  ```javascript
-  {
-    Headers{ Authorization: token};
-  }
-  ```
-
-  /api/howtos/:id
-  GET
-
-- JWT protected (header) :heavy_check_mark:
-- payload (body) :x:
-
-  ```javascript
-  {
-    Headers{ Authorization: token};
-  }
-  ```
-
-  /api/howtos
-  POST
+ ---
+##### Create new board
+#
+    /api/boards/
+    POST
 
 - JWT protected (header) :heavy_check_mark:
 - payload (body) :heavy_check_mark:
 
   ```javascript
   {
-    name: "howto howto"
-    desc: "this will show you howto howto"
-    user_id: 3
-    Headers{ Authorization: token};
+    user_id: 1,
+    name: "New Board Name"
   }
   ```
+ ---
+##### Get all boards
+#
+    /api/boards/
+    GET
 
-  /api/howtos/:id
-  PUT
+- JWT protected (header) :x:
+- payload (body) :x:
+
+ ---
+##### Get boards by user ID
+#
+    /api/boards/user/:id
+    GET
+
+- JWT protected (header) :x:
+- payload (body) :heavy_check_mark:
+
+  ```javascript
+  {
+    user_id: 1
+  }
+  ```
+ ---
+##### Edit board
+#
+    /api/boards/:id
+    PUT
 
 - JWT protected (header) :heavy_check_mark:
 - payload (body) :heavy_check_mark:
 
   ```javascript
   {
-    name: "howto howto"
-    desc: "this will show you howto howto"
-    user_id: 3
-    Headers{ Authorization: token};
+    id: 1,
+    user_id: 1,
+    name: "Edited Board Name"
   }
   ```
-
-  /api/howtos/:id
-  DELETE
+ ---
+##### Delete board
+#
+    /api/boards/:id
+    DELETE
 
 - JWT protected (header) :heavy_check_mark:
-- payload (body) :x:
+- payload (body) :heavy_check_mark:
 
   ```javascript
   {
-    Headers{ Authorization: token};
+    id: 1
   }
   ```
 
-## ENDPOINTS
+ ---
 
-| Endpoint                      | Request Type | Request                            | Response                              |
-| ----------------------------- | ------------ | ---------------------------------- | ------------------------------------- |
-| /api/howtos/:id/steps         | GET          | requires a token                   | [{number: int}, {intruction: string}] |
-| /api/howtos/:id/steps/:number | GET          | requires a token                   | {instruction: string}                 |
-| /api/howtos/:id/steps         | POST         | {number: int, instruction: string} | no return at the moment               |
-| /api/howtos/:id/steps/:number | PUT          | {number: int, instruction: string} | no return at the moment               |
-| /api/howtos/:id/steps/:number | DELETE       | {}                                 | no return at the moment               |
+## ARTICLE ENDPOINTS
+#### Base URL: https://build-week-pintereach-pt.herokuapp.com/
+
+| Endpoint | Request Type | JSON Web Token | Request | Response |
+| - | - | - | - | - |
+| /api/articles/ | POST | :heavy_check_mark: | {board_id: int , link: "" , description: ""} | {id} |
+| /api/articles/ | GET | :x: | | [{articles}] |
+| /api/articles/board/:id | GET | :x: | {board_id: int} | {board_id: int , [{articles}] |
+| /api/articles/:id | PUT | :heavy_check_mark: | {id: int , board_id: int , link: "" , description: ""} | {board_id: int , link: "" , description: ""} |
+| /api/articles/:id | DELETE | :heavy_check_mark: | {id: int} | Success |
 
 ### Examples:
-
-/api/howtos/:id/steps
-GET
-
-- JWT protected (header) :heavy_check_mark:
-- payload (body) :x:
-
-  ```javascript
-  {
-    Headers{ Authorization: token};
-  }
-  ```
-
-  /api/howtos/:id/steps/number
-  GET
-
-- JWT protected (header) :heavy_check_mark:
-- payload (body) :x:
-
-  ```javascript
-  {
-    Headers{ Authorization: token};
-  }
-  ```
-
-  /api/howtos/:id/steps
-  POST
+ ---
+##### Create new article
+#
+    /api/articles/
+    POST
 
 - JWT protected (header) :heavy_check_mark:
 - payload (body) :heavy_check_mark:
 
   ```javascript
   {
-    number: 1
-    instruction: "read this document"
-    user_id: 3
-    Headers{ Authorization: token};
+    board_id: int ,
+    link: “http://www.website.com” ,
+    description: “This description is describing the website very well.”
   }
   ```
+ ---
+##### Get all articles
+#
+    /api/boards/
+    GET
 
-  /api/howtos/:id/steps/:number
-  PUT
+- JWT protected (header) :x:
+- payload (body) :x:
+
+ ---
+##### Get articles by board ID
+#
+    /api/articles/board/:id
+    GET
+
+- JWT protected (header) :x:
+- payload (body) :heavy_check_mark:
+
+  ```javascript
+  {
+    board_id: 1
+  }
+  ```
+ ---
+##### Edit article
+#
+    /api/articles/:id
+    PUT
 
 - JWT protected (header) :heavy_check_mark:
 - payload (body) :heavy_check_mark:
 
   ```javascript
   {
-    name: 1
-    desc: "read the readme available at: "
-    user_id: 3
-    Headers{ Authorization: token};
+    id: 1,
+    board_id: 1,
+    link: “http://www.updatedwebsite.com” ,
+    description: “This updated description is describing the website even better.”
   }
   ```
-
-  /api/howtos/:id/steps/:number
-  DELETE
-
-- JWT protected (header) :heavy_check_mark:
-- payload (body) :x:
-
-  ```javascript
-  {
-    Headers{ Authorization: token};
-  }
-  ```
-
-## ENDPOINTS
-
-| Endpoint                     | Request Type | Request             | Response                  |
-| ---------------------------- | ------------ | ------------------- | ------------------------- |
-| /api/howotos/:id/likes       | GET          | requires a token    | returns likes for a howto |
-| /api/howotos/:id/likes/users | GET          | requires a token    | returns all a users likes |
-| /api/howotos/likes           | GET          | requires a token    | returns all likes         |
-| /api/howotos/:id/likes       | POST         | {user_id, howto_id} | no return at the moment   |
-| /api/howotos/:id/likes       | DELETE       | {user_id, howto_id} | no return at the moment   |
-
-### Examples:
-
-/api/howtos/:id/likes
-GET
-
-- JWT protected (header) :heavy_check_mark:
-- payload (body) :x:
-
-  ```javascript
-  {
-    Headers{ Authorization: token};
-  }
-  ```
-
-  /api/howtos/:id/likes/users
-  GET
-
-- JWT protected (header) :heavy_check_mark:
-- payload (body) :x:
-
-  ```javascript
-  {
-    Headers{ Authorization: token};
-  }
-  ```
-
-  /api/howtos/likes
-  GET
-
-- JWT protected (header) :heavy_check_mark:
-- payload (body) :x:
-
-  ```javascript
-  {
-    Headers{ Authorization: token};
-  }
-  ```
-
-  /api/howtos/:id/likes
-  POST
+ ---
+##### Delete article
+#
+    /api/articles/:id
+    DELETE
 
 - JWT protected (header) :heavy_check_mark:
 - payload (body) :heavy_check_mark:
 
   ```javascript
   {
-    howto_id: 1
-    user_id: 3
-    Headers{ Authorization: token};
+    id: 1
   }
   ```
 
-  /api/howtos/:id/likes
-  PUT
-
-- JWT protected (header) :heavy_check_mark:
-- payload (body) :heavy_check_mark:
-
-  ```javascript
-  {
-    howto_id: 1
-    user_id: 3
-    Headers{ Authorization: token};
-  }
-  ```
-
-  /api/howtos/:id/steps/:number
-  DELETE
-
-- JWT protected (header) :heavy_check_mark:
-- payload (body) :x:
-
-  ```javascript
-  {
-    Headers{ Authorization: token};
-  }
-  ```
+ ---

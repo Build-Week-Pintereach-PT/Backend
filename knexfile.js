@@ -1,4 +1,4 @@
-// Update with your config settings.
+
 
 module.exports = {
 
@@ -25,7 +25,7 @@ module.exports = {
     client: 'sqlite3',
     useNullAsDefault: true,
     connection: {
-      filename: './database/tests.db3',
+      filename: ':memory:',
     },
     migrations: {
       directory: './database/migrations',

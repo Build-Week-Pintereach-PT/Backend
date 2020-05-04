@@ -14,12 +14,14 @@ function addUser(user) {
 }
 
 function find() {
-    return db('users')
+    return db('users as u')
+        .select('u.email', 'u.field_of_study', 'u.id', 'u.name', 'u.occupation', 'u.username')
 }
 
 function findBy(username) {
-    return db('users').where({username})
-    .then(([user]) => user)
+    return db('users')
+        .where({username})
+        .then(([user]) => user)
 }
 
 function findById(id) {

@@ -1,11 +1,12 @@
 const router = require('express').Router()
 const db = require('../articles/article-model')
+const middleAuth = require('../auth/authenticate-middleware')
 
 /************************/
 /******** CREATE ********/
 /************************/
 
-router.post('/', (req, res) => {
+router.post('/', middleAuth, (req, res) => {
 
     db.addArticle(req.body)
   
@@ -60,7 +61,7 @@ router.get('/board/:id', (req, res) => {
 /******** UPDATE ********/
 /************************/
 
-router.put('/:id', (req, res) => {
+router.put('/:id', middleAuth, (req, res) => {
     db.update(req.params.id, req.body)
   
         .then(() => {
@@ -80,7 +81,7 @@ router.put('/:id', (req, res) => {
 /******** DELETE ********/
 /************************/
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', middleAuth, (req, res) => {
     db.remove(req.params.id)
   
         .then(() => {
